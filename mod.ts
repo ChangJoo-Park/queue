@@ -25,7 +25,7 @@ export class Queue {
 	}
 
 	private _run() {
-		if (this.#_isRunning) return;
+		if (this.#_isRunning || this.#_queue.length < 1) return;
 		this.#_isRunning = true;
 		(async () => {
 			let value = this.#_queue.shift();
