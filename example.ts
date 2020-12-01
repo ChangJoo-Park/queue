@@ -2,7 +2,7 @@
 import Queue from "./mod.ts";
 
 // Create a new queue.
-const queue = new Queue();
+const queue = new Queue(false);
 
 const delay = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -22,5 +22,13 @@ queue.push(() => console.log("3"));
 // the queue.
 
 console.log("Adding 4 to queue.");
-const value = await queue.push(() => "hello world");
-console.log("4 was executed:", value);
+const valuePromise = queue.push(() => "hello world");
+
+console.log("About to start queue");
+setTimeout(() => {
+	console.log("Starting queue");
+	queue.start();
+}, 1000);
+
+console.log("4 was executed:", await valuePromise);
+queue.push(() => console.log("5"));
