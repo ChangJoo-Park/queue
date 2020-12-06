@@ -24,12 +24,17 @@ export class Queue {
 		this._run();
 	}
 
+	public stop() {
+		this.#autostart = false;
+		this.#_isRunning = false;
+	}
+
 	private _run() {
 		if (this.#_isRunning || this.#_queue.length < 1) return;
 		this.#_isRunning = true;
 		(async () => {
 			let value = this.#_queue.shift();
-			while (value !== undefined) {
+			while (this.#_isRunning && value !== undefined) {
 				const [fn, args, resolve, reject] = value;
 				try {
 					const value = await fn(...args);
