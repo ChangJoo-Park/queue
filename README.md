@@ -22,6 +22,12 @@ queue.push(async () => {
 });
 queue.push(() => console.log("3"));
 
+console.log("About to start queue");
+setTimeout(() => {
+	console.log("Starting queue");
+	queue.start();
+}, 1000);
+
 // You can even wait for your
 // function to be executed in
 // the queue.
